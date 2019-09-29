@@ -9,7 +9,6 @@ import 'rc-datepicker/lib/style.css';
 const validateForm = (errors) => {
     let valid = true;
     Object.values(errors).forEach(
-        // if we have an error string set valid to false
         (val) => val.length > 0 && (valid = false)
     );
     return valid;
@@ -498,7 +497,7 @@ class UserForm extends Component {
 
                     <Form.Group as={Row} controlId="formPassport">
                         <Form.Label column sm={2}>
-                            Passprot NO 
+                            Passport NO 
                         </Form.Label>
                         <Col sm={4}>
                             <Form.Control type="text" placeholder="Passprot no" value={data.passportNo || ''} name="passportNo" onChange={this.handleChange} noValidate/>
