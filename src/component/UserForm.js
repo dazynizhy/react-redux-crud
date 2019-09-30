@@ -123,20 +123,14 @@ class UserForm extends Component {
                 break;
             case 'firstName': 
                 errors.firstName = 
-                    value.length < 5
-                    ? 'Full Name must be 5 characters long!'
+                    value.length < 3
+                    ? 'firstName must be 3 characters long!'
                     : '';
                 break;
             case 'lastName': 
                 errors.lastName = 
-                value.length < 5
-                    ? 'Full Name must be 5 characters long!'
-                    : '';
-                break;
-            case 'password': 
-                errors.password = 
-                value.length < 8
-                    ? 'Password must be 8 characters long!'
+                value.length < 3
+                    ? 'lastName must be 3 characters long!'
                     : '';
                 break;
           default:
