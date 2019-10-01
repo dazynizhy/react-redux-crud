@@ -65,7 +65,7 @@ class TableUser extends Component {
                     <Col sm={2}>
                         <Button variant="secondary" size="sm">Delete</Button>
                     </Col>
-                    <Col sm={8}>
+                    {/* <Col sm={8}>
                         <Pagination className="p-right">
                             <Pagination.Prev onClick={(e) => this.handlePage(e,prevPage)}/>
                             {(() => {
@@ -75,10 +75,9 @@ class TableUser extends Component {
                                 }
                                 return options
                             })()}
-                            {/* <Pagination.Item active>{12}</Pagination.Item> */}
                             <Pagination.Next onClick={(e) => this.handlePage(e,nextPage)}/>
                         </Pagination>
-                    </Col>
+                    </Col> */}
                 </Row>
                 
                 <Table striped bordered hover variant="dark">
