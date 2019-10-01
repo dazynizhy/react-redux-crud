@@ -35,11 +35,14 @@ class TableUser extends Component {
                 count++
             }
         })
+        listUser[count] = temp
        
         this.setState({
             list: listUser ,
             dataUser : listUser[1]
         })
+
+        console.log('ALL' ,listUser)
     }
   
     render () {

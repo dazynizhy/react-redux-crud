@@ -443,7 +443,7 @@ class UserForm extends Component {
                                 placeholder="" value={data.mobileNumber || ''}
                                 name="mobileNumber" required 
                                 onChange={this.handleChange} noValidate
-                                maxlength="9"/>
+                                maxLength="9"/>
                                 
                         </Col>
                     </Form.Group>
