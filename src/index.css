@@ -21,6 +21,6 @@ code {
   border:1px solid #FF0000 !important;
 }
 
-.body-content{
-  
+.p-right{
+  float: right;
 }
