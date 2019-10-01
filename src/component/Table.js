@@ -6,18 +6,52 @@ import EditComponet from './EditComponent'
 
 class TableUser extends Component {
     
-    handlePage = (event) => {
-        event.preventDefault()
-        console.log('tets')
-        console.log(this.props.users)
-        
+    state = {
+        list : null,
+        dataUser : null,
+        page : 1
+    }
+    
+    handlePage = (e,page) => {
+        e.preventDefault()
+        console.log('page',page)
+        console.log('ddd',this.state.list)
+        let data = this.state.list[page]
+        this.setState({
+            dataUser : data,
+            page
+        })
+    }
+
+    componentDidMount = () => {
+        let count = 1
+        let listUser = []
+        let temp = []
+        this.props.users.map((e,i) => {
+            temp.push(e)
+            if((i+1) % 2 === 0){
+                listUser[count] = temp
+                temp = []
+                count++
+            }
+        })
+       
+        this.setState({
+            list: listUser ,
+            dataUser : listUser[1]
+        })
     }
   
     render () {
-    
-       
-        const countPage = this.props.users.length / 3 
+        console.log('ff', this.props.users.length)
+        const countPage = Math.ceil(this.props.users.length / 2 )
+        console.log('countPage',countPage)
+        const nextPage = this.state.page + 1 >= countPage ? countPage : this.state.page + 1
+        console.log('nextPage',nextPage)
+        const prevPage = this.state.page - 1 === 0 ?  1 : this.state.page - 1
+        console.log('prevPage',prevPage)
         console.log(countPage)
+        console.log('2',this.state.dataUser)
        
         return (
             <Container>
@@ -32,18 +66,17 @@ class TableUser extends Component {
                         <Button variant="secondary" size="sm">Delete</Button>
                     </Col>
                     <Col sm={8}>
-                       
                         <Pagination className="p-right">
-                            <Pagination.Prev />
+                            <Pagination.Prev onClick={(e) => this.handlePage(e,prevPage)}/>
                             {(() => {
                                 const options = []
                                 for (let i = 1; i <= countPage ; i++) {
-                                    options.push(<Pagination.Item onClick={this.handlePage}>{i}</Pagination.Item>);
+                                    options.push(<Pagination.Item active={i === this.state.page ? true : false} key={i} onClick={(e) => this.handlePage(e,i)}>{i}</Pagination.Item>);
                                 }
                                 return options
                             })()}
                             {/* <Pagination.Item active>{12}</Pagination.Item> */}
-                            <Pagination.Next />
+                            <Pagination.Next onClick={(e) => this.handlePage(e,nextPage)}/>
                         </Pagination>
                     </Col>
                 </Row>
@@ -58,16 +91,21 @@ class TableUser extends Component {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                  
-
-                    {this.props.users.map((user) => (
-                        user.editing ?
-                        <EditComponet user={user} key={user.id} /> 
-                        : <List key={user.id} user={user}/>  
-                    ))}
-
-                    </tbody>
+                    {   
+                        this.state.dataUser !== null ?
+                        <tbody>
+                            {this.props.users.map((user) => (
+                                user.editing ?
+                                <EditComponet user={user} key={user.id} /> 
+                                : <List key={user.id} user={user}/>  
+                            ))}
+                        </tbody> : 
+                        <tbody> 
+                            <tr>
+                                <td>ไม่มีข้อมูล</td>
+                            </tr>
+                        </tbody>
+                    }
                 </Table>
             </Container>
         )

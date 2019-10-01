@@ -3,6 +3,17 @@ import {connect} from 'react-redux'
 import {Button, ButtonGroup, Form} from 'react-bootstrap'
 
 class List extends Component {
+    handleDelete = (e,id) => {
+        e.preventDefault()
+        this.props.dispatch({type:'DELETE_USER' , id})
+        console.log('delete')
+    }
+
+    handleUpdate = (e,id) => {
+        e.preventDefault()
+        this.props.dispatch({type:'EDIT_USER' , id})
+        console.log('Update')
+    }
     render () {
         return (
             <tr>
@@ -17,15 +28,16 @@ class List extends Component {
                 <td>
                 <ButtonGroup toggle>
                     <Button size="md"
-                        onClick={()=> this.props.dispatch({type:'EDIT_USER' , id: this.props.user.id})}
+                        // onClick={(e)=> this.props.dispatch({type:'EDIT_USER' , id: this.props.user.id})}
+                        onClick={(e) => this.handleUpdate(e,this.props.user.id)}
                     >   
                         Edit
                     </Button>
                     <Button variant="secondary" size="md"
-                        onClick={()=> this.props.dispatch({type:'DELETE_USER' , id: this.props.user.id})}
+                        // onClick={(e)=> this.props.dispatch({type:'DELETE_USER' , id: this.props.user.id})}
+                        onClick={(e) => this.handleDelete(e,this.props.user.id)}
                     >
                         Delete
-                        
                     </Button>
                 </ButtonGroup>
                 </td>
