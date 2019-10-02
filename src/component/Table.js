@@ -44,6 +44,7 @@ class TableUser extends Component {
 
         console.log('ALL' ,listUser)
     }
+
   
     render () {
         console.log('ff', this.props.users.length)
@@ -99,7 +100,7 @@ class TableUser extends Component {
                             {this.props.users.map((user) => (
                                 user.editing ?
                                 <EditComponet user={user} key={user.id} /> 
-                                : <List key={user.id} user={user}/>  
+                                : <List key={user.id} user={user} />  
                             ))}
                         </tbody> : 
                         <tbody> 

@@ -3,6 +3,12 @@ import {connect} from 'react-redux'
 import {Button, ButtonGroup, Form} from 'react-bootstrap'
 
 class List extends Component {
+    
+    
+    state = {
+        checkedItems: new Map(),
+    }
+
     handleDelete = (e,id) => {
         e.preventDefault()
         this.props.dispatch({type:'DELETE_USER' , id})
@@ -14,12 +20,20 @@ class List extends Component {
         this.props.dispatch({type:'EDIT_USER' , id})
         console.log('Update')
     }
+
+    handleDeleteGroup = (e,id) => {
+        //event.preventDefault()
+        //console.log(event)
+        //this.props.dispatch({type:'CHECK_USER_DELETE' , id})
+        console.log('checked')
+    }
+
     render () {
         return (
             <tr>
                 <td> 
-                <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label={this.props.user.firstName + ' ' +  this.props.user.lastName} />
+                <Form.Group controlId={'check' + this.props.user.id }>
+                    <Form.Check type="checkbox" name={this.props.user.firstName} onChange={(e) => this.handleDelete(e,this.props.user.id)}  label={this.props.user.firstName + ' ' +  this.props.user.lastName} />
                 </Form.Group>
                 </td>
                 <td>{this.props.user.gender}</td>

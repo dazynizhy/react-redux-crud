@@ -21,6 +21,7 @@ class UserForm extends Component {
         data: {
             id: new Date(),
             editing: false,
+            isCheck: false,
             titleName: null,
             firstName: null,
             lastName: null,
@@ -63,7 +64,6 @@ class UserForm extends Component {
     
 
     handleChange = (event) => {
-        event.preventDefault();
         const { name, value } = event.target; //, type, checked
         //console.log(type + '|' + value + '|' + checked)
         if(name !== 'mobileNumber'
