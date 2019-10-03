@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {Container, Table, Form, Button, Col, Row, Pagination } from 'react-bootstrap'
+import {Container, Table, Form, Button, Col, Row } from 'react-bootstrap'
+//Pagination
 import List from './List'
 import EditComponet from './EditComponent'
 
@@ -9,7 +10,8 @@ class TableUser extends Component {
     state = {
         list : null,
         dataUser : null,
-        page : 1
+        page : 1,
+        isCkeckAll: false
     }
     
     handlePage = (e,page) => {
@@ -24,29 +26,47 @@ class TableUser extends Component {
     }
 
     componentDidMount = () => {
-        let count = 1
-        let listUser = []
-        let temp = []
-        this.props.users.map((e,i) => {
-            temp.push(e)
-            if((i+1) % 2 === 0){
-                listUser[count] = temp
-                temp = []
-                count++
-            }
-        })
-        listUser[count] = temp
+        // let count = 1
+        // let listUser = []
+        // let temp = []
+        // this.props.users.map((e,i) => {
+        //     temp.push(e)
+        //     if((i+1) % 2 === 0){
+        //         listUser[count] = temp
+        //         temp = []
+        //         count++
+        //     }
+        // })
+        // listUser[count] = temp
        
-        this.setState({
-            list: listUser ,
-            dataUser : listUser[1]
-        })
+        // this.setState({
+        //     list: listUser ,
+        //     dataUser : listUser[1]
+        // })
+        this.props.dispatch({type:'RESET'})
+    }
 
-        console.log('ALL' ,listUser)
+    handleDeleteGroup = (e) => {
+        this.props.dispatch({type:'DELETE_GROUP'})
+    }
+
+    handleDeleteAll = (event) => {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+            [name]: value
+        })
+        console.log('test ccc', value)
+        this.props.dispatch({
+            type:'SELECT_ALL',
+            check: value
+        })
     }
 
   
     render () {
+        console.log('teeesers' ,this.props.users)
         console.log('ff', this.props.users.length)
         const countPage = Math.ceil(this.props.users.length / 2 )
         console.log('countPage',countPage)
@@ -61,14 +81,6 @@ class TableUser extends Component {
             <Container>
                 <br/><br/>
                 <Row>
-                    <Col sm={2}>
-                    <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="Secletce ALL"  />
-                    </Form.Group>
-                    </Col>
-                    <Col sm={2}>
-                        <Button variant="secondary" size="sm">Delete</Button>
-                    </Col>
                     {/* <Col sm={8}>
                         <Pagination className="p-right">
                             <Pagination.Prev onClick={(e) => this.handlePage(e,prevPage)}/>
@@ -83,6 +95,21 @@ class TableUser extends Component {
                         </Pagination>
                     </Col> */}
                 </Row>
+
+                {
+                    this.props.users.length > 0 ?
+                    <Row>
+                        <Col sm={2}>
+                            <Form.Group controlId="formBasicCheckbox">
+                                <Form.Check type="checkbox" label="Secletce ALL" name="isCkeckAll"  checked={this.state.isCkeckAll}  onChange={this.handleDeleteAll} />
+                            </Form.Group>
+                        </Col>
+                    
+                        <Col sm={2}>
+                            <Button variant="secondary" size="sm"  onClick={(e) => this.handleDeleteGroup()}>Delete</Button>
+                        </Col>
+                    </Row> : null
+                }
                 
                 <Table striped bordered hover variant="dark">
                     <thead>
@@ -95,7 +122,7 @@ class TableUser extends Component {
                         </tr>
                     </thead>
                     {   
-                        this.state.dataUser !== null ?
+                        this.props.users.length > 0 ?
                         <tbody>
                             {this.props.users.map((user) => (
                                 user.editing ?
@@ -105,7 +132,7 @@ class TableUser extends Component {
                         </tbody> : 
                         <tbody> 
                             <tr>
-                                <td>ไม่มีข้อมูล</td>
+                                <td colSpan={5} className="text-center">ไม่มีข้อมูล</td>
                             </tr>
                         </tbody>
                     }

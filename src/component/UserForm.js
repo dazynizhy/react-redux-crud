@@ -39,7 +39,7 @@ class UserForm extends Component {
         errors: {
             firstName: '',
             lastName: '',
-            mobilePhone: '',
+            mobileNumber: '',
             email: '',
             password: '',
             isEmptyTitlename: false,
@@ -106,9 +106,10 @@ class UserForm extends Component {
                     this.setState(prevState => ({
                         data: {                   
                             ...prevState.data,    
-                            salary :  value  
+                            salary :  value
                         }
                     }))
+                    //.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") 
                 }
                 break;
             case 'mobileNumber': 
@@ -120,6 +121,10 @@ class UserForm extends Component {
                         }
                     }))
                 }
+                errors.mobileNumber = 
+                value.length < 9
+                    ? 'mobileNumber must be 9 characters!'
+                    : '';
                 break;
             case 'firstName': 
                 errors.firstName = 
@@ -133,6 +138,12 @@ class UserForm extends Component {
                     ? 'lastName must be 3 characters long!'
                     : '';
                 break;
+            // case 'mobileNumber':
+            //     errors.mobileNumber = 
+            //     value.length < 10
+            //         ? 'mobileNumber must be 10 characters!'
+            //         : '';
+            //     break;
           default:
             break;
         }
@@ -442,9 +453,11 @@ class UserForm extends Component {
                                 className={errors.isEmptyMobile ? 'err-br-red' : ''} 
                                 placeholder="" value={data.mobileNumber || ''}
                                 name="mobileNumber" required 
-                                onChange={this.handleChange} noValidate
-                                maxLength="9"/>
-                                
+                                onChange={this.handleChange} 
+                                maxLength="9"
+                                noValidate
+                            />
+                            {errors.mobileNumber.length > 0 && <span className='error tx-red'>{errors.mobileNumber}</span>}       
                         </Col>
                     </Form.Group>
 

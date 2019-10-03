@@ -21,11 +21,8 @@ class List extends Component {
         console.log('Update')
     }
 
-    handleDeleteGroup = (e,id) => {
-        //event.preventDefault()
-        //console.log(event)
-        //this.props.dispatch({type:'CHECK_USER_DELETE' , id})
-        console.log('checked')
+    handleCheckbox = (e,id) => {
+        this.props.dispatch({type:'CHECK_USER_DELETE' , id})
     }
 
     render () {
@@ -33,7 +30,9 @@ class List extends Component {
             <tr>
                 <td> 
                 <Form.Group controlId={'check' + this.props.user.id }>
-                    <Form.Check type="checkbox" name={this.props.user.firstName} onChange={(e) => this.handleDelete(e,this.props.user.id)}  label={this.props.user.firstName + ' ' +  this.props.user.lastName} />
+                    <Form.Check type="checkbox" clasName="chekbox-list" name={this.props.user.firstName} onChange={(e) => this.handleCheckbox(e,this.props.user.id)}  
+                    checked={this.props.user.isCheck === true} 
+                    label={ `${this.props.user.firstName} ${this.props.user.lastName}`} />
                 </Form.Group>
                 </td>
                 <td>{this.props.user.gender}</td>
