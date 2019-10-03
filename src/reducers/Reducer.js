@@ -6,7 +6,6 @@ const Reducer = (state = [], action) => {
         case 'RESET' :
             return state.map((user)=>user.isCheck === true  ? {...user,isCheck:false} : user)
         case 'ADD_USER':
-            console.log('dfsdf')
             return state.concat([action.data])
         case 'DELETE_USER' :
             return state.filter((user)=>user.id !== action.id )
